@@ -1,0 +1,8 @@
+services:
+  node-app:
+    container_name: node-button-app
+    build:
+      context: .
+    ports:
+     - "3000:3000"
+    
