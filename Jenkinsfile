@@ -11,7 +11,7 @@ pipeline {
     }
     stage ('build node app') {
       steps{
-        sh ' docker compose up -f node-app/docker-compose.yaml --build -d '
+        sh ' docker compose -f node-app/docker-compose.yaml up --build -d '
         sh ' echo " node based home page deployed" ' 
       }
     }
