@@ -5,13 +5,13 @@ pipeline {
       steps{
         sh ' pwd'
         sh ' ls -l'
-        sh 'docker compose -f /test/docker-compose.yaml up --build'
+        sh 'docker compose -f test/docker-compose.yaml up --build'
         sh ' echo "voting app is deployed" '
       }
     }
     stage ('build node app') {
       steps{
-        sh ' docker compose up -f /node-app/docker-compose.yaml --build '
+        sh ' docker compose up -f node-app/docker-compose.yaml --build '
         sh ' echo " node based home page deployed" ' 
       }
     }
