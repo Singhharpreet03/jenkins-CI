@@ -1,18 +1,30 @@
 pipeline {
   agent any
+  environment{
+        HELM_PATH=''
+        BRANCH='master'
+        MAJ_VER='1.0'
+        DOCKER_CREDS=credentials('docker-creds')
+    }
   stages {
-    stage ('build basic app'){
+    stage ('build docker images'){
       steps{
-        sh ' pwd'
-        sh ' ls -l'
-        sh 'docker compose -f test/docker-compose.yaml up --build -d'
-        sh ' echo "voting app is deployed" '
+        echo "building docker images"
+        script{
+          dir('/node-app/')
+          sh 'docker build . -t hp-home'
+        }
       }
     }
-    stage ('build node app') {
+    stage('docker push images'){
       steps{
-        sh ' docker compose -f node-app/docker-compose.yaml up --build -d '
-        sh ' echo " node based home page deployed" ' 
+        echo "Pushing docker images"
+        script{
+          sh 'docker tag hp-home:latest $DOCKER_CREDS_USR/HP-HOME:$MAJ_VER.${env.BUILD_ID}'
+          sh 'echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin'
+          sh 'docker push $DOCKER_CREDS_USR/HP-HOME:$MAJ_VER.${env.BUILD_ID}'
+        }
+        
       }
     }
   }
