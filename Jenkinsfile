@@ -11,8 +11,9 @@ pipeline {
       steps{
         echo "building docker images"
         script{
-          dir('/node-app/')
+          dir('/node-app/'){
           sh 'docker build . -t hp-home'
+        }
         }
       }
     }
