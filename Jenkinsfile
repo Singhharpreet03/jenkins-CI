@@ -17,15 +17,18 @@ pipeline {
         }
       }
     }
-    stage('docker push images'){
-      steps{
+    stage('docker push images') {
+    steps {
         echo "Pushing docker images"
-        script{
-          sh 'docker tag hp-home:latest $DOCKER_CREDS_USR/hp-home:$MAJ_VER.${env.BUILD_ID}'
-          sh 'echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin'
-          sh 'docker push $DOCKER_CREDS_USR/HP-HOME:$MAJ_VER.${env.BUILD_ID}'
+        script {
+            sh '''
+                docker tag hp-home:latest $DOCKER_CREDS_USR/hp-home:$MAJ_VER.$BUILD_ID
+                echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin
+                docker push $DOCKER_CREDS_USR/hp-home:$MAJ_VER.$BUILD_ID
+            '''
         }
-        
+    }
+}
       }
     }
   }
