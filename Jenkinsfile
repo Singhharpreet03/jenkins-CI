@@ -31,6 +31,7 @@ pipeline {
        }
      }
     stage('update helm repo'){
+      steps{
       sh '''
          git clone https://x-access-token:$GITHUB_TOKEN@github.com/$HELM_PATH
          cd testapp-helm-repo
@@ -48,7 +49,9 @@ pipeline {
           git push https://x-access-token:$GITHUB_TOKEN@github.com/Singhharpreet03/testapp-helm-repo.git $BRANCH
           '''
       }
-    }
       }
     }
+  }
+      }
+    
  
