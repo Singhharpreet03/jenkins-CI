@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage ('build docker images'){
       steps{
-        echo "building docker images"
+        echo "building docker images now"
         script{
           dir('node-app/'){
           sh 'docker build . -t hp-home'
