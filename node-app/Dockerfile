@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
-COPY /vault/secrets/dev1 ./.env
+COPY .env .env
 # Install dependencies
 RUN npm install
 
